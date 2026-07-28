@@ -20,6 +20,7 @@ test("build contains the interactive site and optimized media", async () => {
   const script = await readFile(new URL(`../dist/assets/${scriptName}`, import.meta.url), "utf8");
   assert.match(script, /Taqueria California/);
   assert.match(script, /Fresh Mexican food made daily/);
+  assert.match(script, /Taqueriacaliforniatulsa@gmail\.com/);
   assert.match(script, /mobile-actions/);
 
   await Promise.all([
