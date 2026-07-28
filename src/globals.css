@@ -152,6 +152,19 @@ main { display: block; }
   text-transform: uppercase;
 }
 
+/* Keep every green text accent consistent with the compact menu kicker. */
+.open-status,
+.inline-status,
+.popular-body strong,
+.menu-card-price,
+.menu-card-details li.highlight,
+footer a {
+  font-family: "Oswald", sans-serif;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
 .hero h1 {
   margin: 0;
   font-family: "Black Han Sans", sans-serif;
