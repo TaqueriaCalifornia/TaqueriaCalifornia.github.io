@@ -417,7 +417,17 @@ footer {
 }
 footer img { border-radius: 50%; }
 footer p { margin: 0; }
-footer a { min-height: 44px; display: inline-flex; align-items: center; color: var(--green-bright); font-family: "Oswald", sans-serif; font-weight: 700; }
+footer a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  color: var(--green-bright);
+  font-family: "Oswald", sans-serif;
+  font-size: .86rem;
+  font-weight: 700;
+  letter-spacing: .035em;
+  text-transform: lowercase;
+}
 
 .mobile-actions { display: none; }
 

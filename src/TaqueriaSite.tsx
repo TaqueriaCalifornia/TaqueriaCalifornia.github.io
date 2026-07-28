@@ -18,7 +18,7 @@ type MenuItem = {
 
 const phoneHref = "tel:9188730623";
 const phoneDisplay = "918-873-0623";
-const supportEmail = "Taqueriacaliforniatulsa@gmail.com";
+const supportEmail = "taqueriacaliforniatulsa@gmail.com";
 const supportEmailHref = `mailto:${supportEmail}`;
 const googleMapsUrl =
   "https://www.google.com/maps/place/Taqueria+California/@36.1612821,-95.968302,15z/data=!3m1!4b1!4m6!3m5!1s0x87b6edd81b4b27a5:0x9f60e79051aabf41!8m2!3d36.1612825!4d-95.9580237!16s%2Fg%2F11mvwkzcx1";
