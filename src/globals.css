@@ -144,7 +144,7 @@ main { display: block; }
 .eyebrow,
 .section-kicker {
   margin: 0 0 12px;
-  color: var(--green);
+  color: var(--green-bright);
   font-family: "Oswald", sans-serif;
   font-size: .9rem;
   font-weight: 700;
@@ -198,7 +198,7 @@ footer a {
   font-weight: 700;
 }
 
-.open-status { padding: 9px 13px; background: #e7efdf; color: #215d16; }
+.open-status { padding: 9px 13px; background: #e7efdf; color: var(--green-bright); }
 .open-status.closed { background: #f3e3e3; color: #8b2227; }
 .open-status > span { width: 9px; height: 9px; border-radius: 50%; background: currentColor; }
 
@@ -393,7 +393,7 @@ footer {
 .visit-card h3 { margin: 0 0 7px; font-family: "Oswald", sans-serif; font-size: 1.3rem; text-transform: uppercase; }
 .visit-card p { margin: 0; color: #3d3d3d; line-height: 1.55; }
 .visit-card a { display: inline-flex; min-height: 44px; align-items: center; margin-top: 6px; color: #a91f25; font-family: "Oswald", sans-serif; font-weight: 700; }
-.inline-status { margin-bottom: 8px !important; color: #215d16 !important; }
+.inline-status { margin-bottom: 8px !important; color: var(--green-bright) !important; }
 .inline-status.closed { color: #8b2227 !important; }
 .visit-card table { width: 100%; border-collapse: collapse; }
 .visit-card th,

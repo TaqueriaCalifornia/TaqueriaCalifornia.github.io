@@ -690,7 +690,7 @@ export function TaqueriaSite() {
 
       <footer>
         <img src="/media/logo-128.png" width="44" height="44" alt="" />
-        <p>© {new Date().getFullYear()} Taqueria California · Tulsa, OK</p>
+        <p>© {new Date().getFullYear()} Taqueria California LLC · Tulsa, OK</p>
         <a href={phoneHref} onClick={() => trackConversion("call_click", { location: "footer" })}>{phoneDisplay}</a>
       </footer>
 
