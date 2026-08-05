@@ -16,6 +16,14 @@ type MenuItem = {
   ingredients: string[];
 };
 
+type Drink = {
+  id: string;
+  name: Translated;
+  price: string;
+  image: keyof typeof imageDimensions;
+  description: Translated;
+};
+
 const phoneHref = "tel:9188730623";
 const phoneDisplay = "918-873-0623";
 const supportEmail = "taqueriacaliforniatulsa@gmail.com";
@@ -44,6 +52,8 @@ const imageDimensions = {
   "quesabirria-combo": { width: 845, height: 1200 },
   "rice-beans": { width: 900, height: 1200 },
   tamales: { width: 1200, height: 800 },
+  horchata: { width: 1200, height: 900 },
+  "pineapple-water": { width: 1200, height: 900 },
 } as const;
 
 const ingredientLabels: Record<string, Translated> = {
@@ -310,6 +320,29 @@ const categoryLabels: Record<MenuCategory, Translated> = {
   sides: { en: "Sides", es: "Extras" },
 };
 
+const drinks: Drink[] = [
+  {
+    id: "horchata",
+    name: { en: "Horchata", es: "Horchata" },
+    price: "$3.99",
+    image: "horchata",
+    description: {
+      en: "Creamy rice drink with cinnamon, made fresh every morning and served ice cold.",
+      es: "Bebida cremosa de arroz con canela, preparada fresca cada mañana y servida bien fría.",
+    },
+  },
+  {
+    id: "pineapple-water",
+    name: { en: "Pineapple Water", es: "Agua de Piña" },
+    price: "$3.99",
+    image: "pineapple-water",
+    description: {
+      en: "Fresh pineapple blended with water and a touch of sugar. Light, sweet, and refreshing.",
+      es: "Piña fresca licuada con agua y un toque de azúcar. Ligera, dulce y refrescante.",
+    },
+  },
+];
+
 const meats = [
   { type: { en: "Beef", es: "Res" }, name: { en: "Grilled Steak", es: "Carne Asada" }, tone: "beef" },
   { type: { en: "Chicken", es: "Pollo" }, name: { en: "Chicken", es: "Pollo" }, tone: "chicken" },
@@ -484,6 +517,7 @@ export function TaqueriaSite() {
   const text = {
     en: {
       menu: "Menu",
+      drinks: "Drinks",
       meats: "Meats",
       visit: "Visit",
       eyebrow: "Tulsa food truck · Pickup only",
@@ -494,6 +528,9 @@ export function TaqueriaSite() {
       viewMenu: "View Menu",
       popular: "Popular Picks",
       menuIntro: "Start with customer favorites or open a category to see the complete menu.",
+      drinksHeading: "Aguas Frescas",
+      drinksKicker: "Made fresh daily",
+      drinksIntro: "Traditional Mexican aguas frescas, blended fresh in house and served ice cold.",
       meatsIntro: "Choose your favorite protein for tacos, burritos, tortas, quesadillas, plates, and more.",
       location: "Location",
       hours: "Hours",
@@ -507,6 +544,7 @@ export function TaqueriaSite() {
     },
     es: {
       menu: "Menú",
+      drinks: "Bebidas",
       meats: "Carnes",
       visit: "Visítanos",
       eyebrow: "Food truck en Tulsa · Solo para recoger",
@@ -517,6 +555,9 @@ export function TaqueriaSite() {
       viewMenu: "Ver Menú",
       popular: "Los Favoritos",
       menuIntro: "Empieza con los favoritos o abre una categoría para ver el menú completo.",
+      drinksHeading: "Aguas Frescas",
+      drinksKicker: "Hechas frescas a diario",
+      drinksIntro: "Aguas frescas mexicanas tradicionales, preparadas en casa y servidas bien frías.",
       meatsIntro: "Elige tu carne favorita para tacos, burritos, tortas, quesadillas, platos y más.",
       location: "Ubicación",
       hours: "Horario",
@@ -539,6 +580,7 @@ export function TaqueriaSite() {
         </a>
         <div className="nav-links">
           <a href="#menu">{text.menu}</a>
+          <a href="#drinks">{text.drinks}</a>
           <a href="#meats">{text.meats}</a>
           <a href="#visit">{text.visit}</a>
         </div>
@@ -631,6 +673,34 @@ export function TaqueriaSite() {
                 </div>
               );
             })}
+          </div>
+        </section>
+
+        <section className="dark-section drinks-section" id="drinks" aria-labelledby="drinks-title">
+          <div className="section-heading">
+            <p className="section-kicker">{text.drinksKicker}</p>
+            <h2 id="drinks-title">{text.drinksHeading}</h2>
+            <p>{text.drinksIntro}</p>
+          </div>
+
+          <div className="drinks-grid">
+            {drinks.map((drink) => (
+              <article className="drink-card" key={drink.id}>
+                <div className="drink-image-wrap">
+                  <ResponsiveImage
+                    image={drink.image}
+                    alt={drink.name[language]}
+                    className="drink-image"
+                    sizes="(max-width: 720px) 88vw, 44vw"
+                  />
+                </div>
+                <div className="drink-body">
+                  <h3>{drink.name[language]}</h3>
+                  <p>{drink.description[language]}</p>
+                  <strong>{drink.price}</strong>
+                </div>
+              </article>
+            ))}
           </div>
         </section>
 
