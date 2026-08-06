@@ -535,7 +535,7 @@ export function TaqueriaSite() {
       <a className="skip-link" href="#main-content">Skip to content</a>
       <nav className="top-nav" aria-label={language === "en" ? "Primary navigation" : "Navegación principal"}>
         <a className="brand-link" href="#top" aria-label="Taqueria California home">
-          <img src="/media/logo-128.png" width="40" height="40" alt="" />
+          <img src="/media/logo-header-256.png" width="40" height="40" alt="" />
         </a>
         <div className="nav-links">
           <a href="#menu">{text.menu}</a>
