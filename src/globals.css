@@ -260,7 +260,12 @@ footer {
 }
 
 .menu-section,
-.meats-section { background: rgba(29, 29, 29, 0.5); }
+.meats-section {
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  background: rgba(29, 29, 29, 0.9);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
 
 .menu-section { padding: clamp(36px, 6vw, 72px); }
 
