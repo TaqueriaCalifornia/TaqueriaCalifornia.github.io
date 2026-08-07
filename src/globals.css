@@ -274,7 +274,10 @@ footer {
     inset 0 -1px 0 rgba(0, 0, 0, 0.4);
 }
 
-.menu-section { padding: clamp(36px, 6vw, 72px); }
+.menu-section {
+  padding: clamp(36px, 6vw, 72px);
+  background: rgba(29, 29, 29, 0.96);
+}
 
 .section-heading { max-width: 670px; margin: 0 auto 34px; text-align: center; }
 .section-heading h2,
@@ -382,7 +385,7 @@ footer {
 
 .meats-section { padding: clamp(30px, 5vw, 58px); text-align: center; }
 .meats-toggle { display: flex; align-items: center; justify-content: center; gap: 20px; border: 0; background: transparent; }
-.meats-toggle .section-kicker { display: block; margin-bottom: 8px; color: #ff8589; }
+.meats-toggle .section-kicker { display: block; margin-bottom: 8px; color: var(--white); }
 .meats-intro { max-width: 650px; margin: 16px auto 0; color: #c7c7c7; line-height: 1.6; }
 .meats-list { max-width: 680px; margin: 30px auto 0; padding: 0; list-style: none; text-align: left; }
 .meats-list li { display: grid; grid-template-columns: 40px auto 1fr; gap: 12px; align-items: center; min-height: 58px; border-bottom: 1px solid #3d3d3d; }

@@ -390,6 +390,7 @@ function ResponsiveImage({
     <picture>
       <source
         type="image/avif"
+        media="(min-width: 721px)"
         srcSet={`/media/${image}-640.avif 640w, /media/${image}-1200.avif 1200w`}
         sizes={sizes}
       />
