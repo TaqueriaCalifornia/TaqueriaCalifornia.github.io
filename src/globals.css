@@ -261,10 +261,54 @@ footer {
 
 .menu-section,
 .meats-section {
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  background: rgba(29, 29, 29, 0.9);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background:
+    radial-gradient(circle at 8% 0%, rgba(255, 255, 255, 0.17), transparent 34%),
+    radial-gradient(circle at 94% 105%, rgba(117, 223, 75, 0.09), transparent 35%),
+    linear-gradient(135deg, rgba(46, 46, 46, 0.92), rgba(17, 17, 17, 0.82) 52%, rgba(35, 35, 35, 0.9));
+  -webkit-backdrop-filter: blur(24px) saturate(145%);
+  backdrop-filter: blur(24px) saturate(145%);
+  box-shadow:
+    var(--shadow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.24),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.4),
+    inset 12px 0 30px rgba(255, 255, 255, 0.025);
+}
+
+.menu-section::before,
+.meats-section::before {
+  position: absolute;
+  z-index: 0;
+  top: -38%;
+  left: -12%;
+  width: 76%;
+  height: 72%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0.025) 48%, transparent 70%);
+  content: "";
+  filter: blur(12px);
+  pointer-events: none;
+  transform: rotate(-8deg);
+}
+
+.menu-section::after,
+.meats-section::after {
+  position: absolute;
+  z-index: 0;
+  inset: 1px;
+  border-radius: inherit;
+  background: linear-gradient(118deg, rgba(255, 255, 255, 0.1), transparent 24%, transparent 72%, rgba(255, 255, 255, 0.035));
+  content: "";
+  pointer-events: none;
+}
+
+.menu-section > *,
+.meats-section > * {
+  position: relative;
+  z-index: 1;
 }
 
 .menu-section { padding: clamp(36px, 6vw, 72px); }
