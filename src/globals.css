@@ -311,7 +311,13 @@ footer {
   z-index: 1;
 }
 
-.menu-section { padding: clamp(36px, 6vw, 72px); }
+.menu-section {
+  padding: clamp(36px, 6vw, 72px);
+  background:
+    radial-gradient(circle at 8% 0%, rgba(255, 255, 255, 0.1), transparent 34%),
+    radial-gradient(circle at 94% 105%, rgba(117, 223, 75, 0.06), transparent 35%),
+    linear-gradient(135deg, rgba(28, 28, 28, 0.98), rgba(8, 8, 8, 0.96) 52%, rgba(20, 20, 20, 0.98));
+}
 
 .section-heading { max-width: 670px; margin: 0 auto 34px; text-align: center; }
 .section-heading h2,
