@@ -349,6 +349,14 @@ function getOpenStatus() {
   const openingMinutes = 10 * 60 + 30;
   const closeLabel = closeMinutes === 23 * 60 ? "11:00 PM" : "10:00 PM";
 
+  // Closed all day Tuesday, so Monday night points at Wednesday rather than "tomorrow".
+  if (weekday === "Tue") {
+    return {
+      isOpen: false,
+      en: "Closed today · opens Wednesday at 10:30 AM",
+      es: "Cerrado hoy · abre el miércoles a las 10:30 AM",
+    };
+  }
   if (minutes >= openingMinutes && minutes < closeMinutes) {
     return {
       isOpen: true,
@@ -363,10 +371,14 @@ function getOpenStatus() {
       es: "Cerrado · abre hoy a las 10:30 AM",
     };
   }
+  const nextOpen =
+    weekday === "Mon"
+      ? { en: "Wednesday", es: "el miércoles" }
+      : { en: "tomorrow", es: "mañana" };
   return {
     isOpen: false,
-    en: "Closed · opens tomorrow at 10:30 AM",
-    es: "Cerrado · abre mañana a las 10:30 AM",
+    en: `Closed · opens ${nextOpen.en} at 10:30 AM`,
+    es: `Cerrado · abre ${nextOpen.es} a las 10:30 AM`,
   };
 }
 
@@ -499,9 +511,12 @@ export function TaqueriaSite() {
       hours: "Hours",
       pickup: "Pickup only",
       pickupNote: "We do not deliver—call ahead and come see us.",
-      mondayThursday: "Mon – Thu",
+      monday: "Monday",
+      tuesday: "Tuesday",
+      wednesdayThursday: "Wed – Thu",
       fridaySaturday: "Fri – Sat",
       sunday: "Sunday",
+      closedLabel: "Closed",
       viewGoogle: "View on Google",
       languageLabel: "Cambiar a Español",
     },
@@ -522,9 +537,12 @@ export function TaqueriaSite() {
       hours: "Horario",
       pickup: "Solo para recoger",
       pickupNote: "No hacemos entregas—llama con anticipación y ven a visitarnos.",
-      mondayThursday: "Lun – Jue",
+      monday: "Lunes",
+      tuesday: "Martes",
+      wednesdayThursday: "Mié – Jue",
       fridaySaturday: "Vie – Sáb",
       sunday: "Domingo",
+      closedLabel: "Cerrado",
       viewGoogle: "Ver en Google",
       languageLabel: "Switch to English",
     },
@@ -672,7 +690,9 @@ export function TaqueriaSite() {
               <p className={`inline-status ${openStatus.isOpen ? "open" : "closed"}`}>{openStatus[language]}</p>
               <table>
                 <tbody>
-                  <tr><th scope="row">{text.mondayThursday}</th><td>10:30 AM – 10:00 PM</td></tr>
+                  <tr><th scope="row">{text.monday}</th><td>10:30 AM – 10:00 PM</td></tr>
+                  <tr><th scope="row">{text.tuesday}</th><td>{text.closedLabel}</td></tr>
+                  <tr><th scope="row">{text.wednesdayThursday}</th><td>10:30 AM – 10:00 PM</td></tr>
                   <tr><th scope="row">{text.fridaySaturday}</th><td>10:30 AM – 11:00 PM</td></tr>
                   <tr><th scope="row">{text.sunday}</th><td>10:30 AM – 10:00 PM</td></tr>
                 </tbody>
