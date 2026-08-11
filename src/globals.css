@@ -202,7 +202,6 @@ footer a {
 
 .open-status { padding: 9px 13px; background: #e7efdf; color: var(--green-deep); }
 .open-status.closed { background: #f3e3e3; color: #8b2227; }
-.open-status > span { width: 9px; height: 9px; border-radius: 50%; background: currentColor; }
 
 .hero-actions {
   display: flex;

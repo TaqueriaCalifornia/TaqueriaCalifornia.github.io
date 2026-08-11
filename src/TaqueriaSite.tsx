@@ -577,7 +577,7 @@ export function TaqueriaSite() {
             <h1 id="hero-title">{text.headline}</h1>
             <p className="hero-subhead">{text.subhead}</p>
             <p className={`open-status ${openStatus.isOpen ? "open" : "closed"}`} aria-live="polite">
-              <span aria-hidden="true" /> {openStatus[language]}
+              {openStatus[language]}
             </p>
             <div className="hero-actions">
               <a className="button primary" href={phoneHref} onClick={() => trackConversion("call_click", { location: "hero" })}>
