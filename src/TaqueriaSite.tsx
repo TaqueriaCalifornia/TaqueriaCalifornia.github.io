@@ -458,13 +458,6 @@ function MenuCard({ item, language }: { item: MenuItem; language: Language }) {
       </button>
       <div className="menu-card-details" id={detailsId} hidden={!expanded}>
         <p>{item.description[language]}</p>
-        <ul aria-label={language === "en" ? "Included" : "Incluye"}>
-          {item.ingredients.map((ingredient, index) => (
-            <li className={index === 0 ? "highlight" : ""} key={ingredient}>
-              {(ingredientLabels[ingredient] ?? { en: ingredient, es: ingredient })[language]}
-            </li>
-          ))}
-        </ul>
       </div>
     </article>
   );
@@ -477,7 +470,6 @@ export function TaqueriaSite() {
     combos: false,
     sides: false,
   });
-  const [meatsExpanded, setMeatsExpanded] = useState(false);
   const [openStatus, setOpenStatus] = useState(getOpenStatus);
   const popularItems = useMemo(
     () => ["11", "13", "16"].map((id) => menuItems.find((item) => item.id === id)!),
@@ -506,6 +498,8 @@ export function TaqueriaSite() {
       viewMenu: "View Menu",
       popular: "Popular Picks",
       menuIntro: "Start with customer favorites or open a category to see the complete menu.",
+      seeMore: "See more",
+      showLess: "Show less",
       meatsIntro: "Choose your favorite protein for tacos, burritos, tortas, quesadillas, plates, and more.",
       location: "Location",
       hours: "Hours",
@@ -532,6 +526,8 @@ export function TaqueriaSite() {
       viewMenu: "Ver Menú",
       popular: "Los Favoritos",
       menuIntro: "Empieza con los favoritos o abre una categoría para ver el menú completo.",
+      seeMore: "Ver más",
+      showLess: "Ver menos",
       meatsIntro: "Elige tu carne favorita para tacos, burritos, tortas, quesadillas, platos y más.",
       location: "Ubicación",
       hours: "Horario",
@@ -612,9 +608,11 @@ export function TaqueriaSite() {
                   <ResponsiveImage image={item.image} alt={item.name[language]} className="popular-image" sizes="(max-width: 800px) 88vw, 30vw" eager />
                 </div>
                 <div className="popular-body">
-                  <h4>{item.name[language]}</h4>
+                  <div className="popular-title-row">
+                    <h4>{item.name[language]}</h4>
+                    <strong>{item.price}</strong>
+                  </div>
                   <p>{item.description[language]}</p>
-                  <strong>{item.price}</strong>
                 </div>
               </article>
             ))}
@@ -624,28 +622,35 @@ export function TaqueriaSite() {
             {(Object.keys(categoryLabels) as MenuCategory[]).map((category) => {
               const expanded = openCategories[category];
               const panelId = `menu-category-${category}`;
+              const headingId = `menu-category-${category}-title`;
+              const categoryItems = menuItems.filter((item) => item.category === category);
+              const visibleItems = expanded ? categoryItems : categoryItems.slice(0, 1);
               return (
-                <div className="menu-category" key={category}>
-                  <button
-                    className="category-toggle"
-                    type="button"
-                    aria-expanded={expanded}
-                    aria-controls={panelId}
-                    onClick={() => {
-                      setOpenCategories((current) => ({ ...current, [category]: !current[category] }));
-                      if (!expanded) trackConversion("menu_category_open", { category });
-                    }}
-                  >
-                    <span>{categoryLabels[category][language]}</span>
-                    <span className="chevron" aria-hidden="true">⌄</span>
-                  </button>
-                  <div className="menu-grid" id={panelId} hidden={!expanded}>
-                    {expanded
-                      ? menuItems.filter((item) => item.category === category).map((item) => (
-                          <MenuCard item={item} language={language} key={item.id} />
-                        ))
-                      : null}
+                <div className="menu-category" key={category} aria-labelledby={headingId}>
+                  <h3 className="category-heading" id={headingId}>
+                    {categoryLabels[category][language]}
+                  </h3>
+                  <div className="menu-grid" id={panelId}>
+                    {visibleItems.map((item) => (
+                      <MenuCard item={item} language={language} key={item.id} />
+                    ))}
                   </div>
+                  {categoryItems.length > 1 ? (
+                    <button
+                      className="category-expand"
+                      type="button"
+                      aria-expanded={expanded}
+                      aria-controls={panelId}
+                      onClick={() => {
+                        setOpenCategories((current) => ({ ...current, [category]: !current[category] }));
+                        if (!expanded) trackConversion("menu_category_open", { category });
+                      }}
+                      aria-label={`${expanded ? text.showLess : text.seeMore} ${categoryLabels[category][language]}`}
+                    >
+                      <span>{expanded ? text.showLess : text.seeMore}</span>
+                      <span className="chevron" aria-hidden="true">⌄</span>
+                    </button>
+                  ) : null}
                 </div>
               );
             })}
@@ -653,15 +658,14 @@ export function TaqueriaSite() {
         </section>
 
         <section className="dark-section meats-section" id="meats" aria-labelledby="meats-title">
-          <button className="meats-toggle" type="button" aria-expanded={meatsExpanded} aria-controls="meats-list" onClick={() => setMeatsExpanded((current) => !current)}>
+          <div className="meats-heading">
             <span>
               <span className="section-kicker">{language === "en" ? "Your choice" : "Tu elección"}</span>
               <strong id="meats-title">{text.meats}</strong>
             </span>
-            <span className="chevron" aria-hidden="true">⌄</span>
-          </button>
+          </div>
           <p className="meats-intro">{text.meatsIntro}</p>
-          <ol className="meats-list" id="meats-list" hidden={!meatsExpanded}>
+          <ol className="meats-list" id="meats-list">
             {meats.map((meat, index) => (
               <li key={meat.name.es}>
                 <span className="meat-index">{String(index + 1).padStart(2, "0")}</span>
