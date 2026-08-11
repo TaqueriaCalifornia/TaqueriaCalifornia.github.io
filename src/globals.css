@@ -279,9 +279,9 @@ footer {
 
 .section-heading { max-width: 670px; margin: 0 auto 34px; text-align: center; }
 .section-heading h2,
-.meats-toggle strong {
+.meats-heading strong {
   margin: 0;
-  font-family: "Black Han Sans", sans-serif;
+  font-family: "Anton", sans-serif;
   font-size: clamp(2.5rem, 5vw, 4.7rem);
   font-weight: 400;
   line-height: 1;
@@ -325,16 +325,29 @@ footer {
   text-transform: uppercase;
 }
 .popular-body { padding: 17px; }
-.popular-body h4 { margin: 0; font-family: "Black Han Sans", sans-serif; font-size: 1.15rem; font-weight: 400; text-transform: uppercase; }
-.popular-body p { min-height: 3.9em; margin: 7px 0 12px; color: #c5c5c5; font-size: .94rem; line-height: 1.45; }
-.popular-body strong { color: var(--green-bright); font-family: "Oswald", sans-serif; }
+.popular-title-row { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; }
+.popular-body h4 { margin: 0; font-family: "Anton", sans-serif; font-size: 1.15rem; font-weight: 400; text-transform: uppercase; }
+.popular-body p { min-height: 3.9em; margin: 7px 0 0; color: #c5c5c5; font-size: .94rem; line-height: 1.45; }
+.popular-body strong { flex-shrink: 0; color: var(--green-bright); font-family: "Oswald", sans-serif; }
 
-.menu-categories { display: grid; gap: 16px; margin-top: 32px; }
+.menu-categories { display: grid; gap: 28px; margin-top: 32px; }
 .menu-category { border-radius: 18px; }
-.category-toggle,
-.meats-toggle {
+.category-heading {
+  margin: 0;
+  color: var(--white);
+  font-family: "Oswald", sans-serif;
+  font-size: 1.35rem;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.category-expand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
   width: 100%;
   min-height: 58px;
+  margin-top: 14px;
   border: 1px solid #4b4b4b;
   border-radius: 16px;
   background: #323232;
@@ -346,16 +359,12 @@ footer {
   letter-spacing: .045em;
   text-transform: uppercase;
 }
-.category-toggle { display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; }
-.category-toggle:hover,
-.meats-toggle:hover { background: #3a3a3a; border-color: var(--green-bright); }
+.category-expand:hover { background: #3a3a3a; border-color: var(--green-bright); }
 .chevron { display: inline-block; color: var(--green-bright); font-size: 1.5rem; line-height: 1; transition: transform .2s ease; }
 [aria-expanded="true"] > .chevron { transform: rotate(180deg); }
 
-.menu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; padding-top: 18px; }
-.menu-grid[hidden],
-.menu-card-details[hidden],
-.meats-list[hidden] { display: none; }
+.menu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; padding-top: 14px; }
+.menu-card-details[hidden] { display: none; }
 .menu-card { overflow: hidden; align-self: start; border: 1px solid #4a4a4a; border-radius: var(--radius-md); background: #292929; }
 .menu-card-image-wrap { position: relative; overflow: hidden; aspect-ratio: 4 / 3; background: #151515; }
 .menu-card-image-wrap picture,
@@ -376,17 +385,14 @@ footer {
   text-align: left;
 }
 .menu-card-summary:hover { background: #333; }
-.menu-card-name { font-family: "Black Han Sans", sans-serif; font-size: 1.05rem; font-weight: 400; line-height: 1.15; text-transform: uppercase; }
+.menu-card-name { font-family: "Anton", sans-serif; font-size: 1.05rem; font-weight: 400; line-height: 1.15; text-transform: uppercase; }
 .menu-card-price { color: var(--green-bright); font-family: "Oswald", sans-serif; font-weight: 700; white-space: nowrap; }
 .menu-card-details { padding: 0 16px 18px; border-top: 1px solid #444; }
 .menu-card-details p { margin: 15px 0; color: #d0d0d0; line-height: 1.55; }
-.menu-card-details ul { display: flex; flex-wrap: wrap; gap: 7px; margin: 0; padding: 0; list-style: none; }
-.menu-card-details li { padding: 5px 9px; border: 1px solid #4d4d4d; border-radius: 999px; color: #d1d1d1; font-family: "Oswald", sans-serif; font-size: .78rem; }
-.menu-card-details li.highlight { border-color: #5ca83f; background: #25421c; color: #baf3a3; }
 
 .meats-section { padding: clamp(30px, 5vw, 58px); text-align: center; }
-.meats-toggle { display: flex; align-items: center; justify-content: center; gap: 20px; border: 0; background: transparent; }
-.meats-toggle .section-kicker { display: block; margin-bottom: 8px; color: #ff8589; }
+.meats-heading { display: flex; align-items: center; justify-content: center; }
+.meats-heading .section-kicker { display: block; margin-bottom: 8px; color: #ff8589; }
 .meats-intro { max-width: 650px; margin: 16px auto 0; color: #c7c7c7; line-height: 1.6; }
 .meats-list { max-width: 680px; margin: 30px auto 0; padding: 0; list-style: none; text-align: left; }
 .meats-list li { display: grid; grid-template-columns: 40px auto 1fr; gap: 12px; align-items: center; min-height: 58px; border-bottom: 1px solid #3d3d3d; }
@@ -395,7 +401,7 @@ footer {
 .meat-type.beef { background: #ff8473; }
 .meat-type.chicken { background: #ffc75a; }
 .meat-type.pork { background: #85df64; }
-.meats-list strong { font-family: "Black Han Sans", sans-serif; font-size: 1.12rem; font-weight: 400; text-transform: uppercase; }
+.meats-list strong { font-family: "Anton", sans-serif; font-size: 1.12rem; font-weight: 400; text-transform: uppercase; }
 
 .visit-section {
   display: grid;
@@ -490,10 +496,10 @@ footer a {
   .menu-grid { grid-template-columns: 1fr; }
   .popular-body p { min-height: 0; }
   .menu-grid { gap: 14px; }
-  .category-toggle { font-size: 1.08rem; }
+  .category-expand { font-size: 1.08rem; }
   .meats-section { padding: 30px 14px; }
-  .meats-toggle { padding: 12px 0; }
-  .meats-toggle strong { font-size: 2.4rem; }
+  .meats-heading { padding: 12px 0; }
+  .meats-heading strong { font-size: 2.4rem; }
   .meats-list li { grid-template-columns: 32px auto 1fr; }
   .meats-list strong { font-size: .98rem; }
   .visit-section { padding: 34px 20px; }
