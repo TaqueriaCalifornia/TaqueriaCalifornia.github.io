@@ -302,7 +302,17 @@ footer {
 }
 
 .popular-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-.popular-card { overflow: hidden; border: 1px solid #494949; border-radius: var(--radius-md); background: var(--charcoal-soft); }
+.popular-card {
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: var(--radius-md);
+  background: rgba(8, 8, 8, 0.55);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  backdrop-filter: blur(18px) saturate(140%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.45);
+}
 .popular-image-wrap { position: relative; overflow: hidden; aspect-ratio: 4 / 3; background: #111; }
 .popular-image-wrap picture,
 .popular-image { display: block; width: 100%; height: 100%; }
@@ -364,7 +374,18 @@ footer {
 
 .menu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; padding-top: 14px; }
 .menu-card-details[hidden] { display: none; }
-.menu-card { overflow: hidden; align-self: start; border: 1px solid #4a4a4a; border-radius: var(--radius-md); background: #292929; }
+.menu-card {
+  overflow: hidden;
+  align-self: start;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: var(--radius-md);
+  background: rgba(8, 8, 8, 0.55);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  backdrop-filter: blur(18px) saturate(140%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.45);
+}
 .menu-card-image-wrap { position: relative; overflow: hidden; aspect-ratio: 4 / 3; background: #151515; }
 .menu-card-image-wrap picture,
 .menu-card-image { display: block; width: 100%; height: 100%; }
@@ -383,10 +404,10 @@ footer {
   cursor: pointer;
   text-align: left;
 }
-.menu-card-summary:hover { background: #333; }
+.menu-card-summary:hover { background: rgba(255, 255, 255, 0.07); }
 .menu-card-name { font-family: "Anton", sans-serif; font-size: 1.05rem; font-weight: 400; line-height: 1.15; text-transform: uppercase; }
 .menu-card-price { color: var(--green-bright); font-family: "Oswald", sans-serif; font-weight: 700; white-space: nowrap; }
-.menu-card-details { padding: 0 16px 18px; border-top: 1px solid #444; }
+.menu-card-details { padding: 0 16px 18px; border-top: 1px solid rgba(255, 255, 255, 0.12); }
 .menu-card-details p { margin: 15px 0; color: #d0d0d0; line-height: 1.55; }
 
 .meats-section { padding: clamp(30px, 5vw, 58px); text-align: center; }
