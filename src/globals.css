@@ -289,9 +289,8 @@ footer {
 }
 .section-heading > p:last-child { margin: 13px 0 0; color: #c3c3c3; line-height: 1.6; }
 .section-heading .section-kicker { color: var(--green-bright); }
-/* These two sit on the cream/white background, where the bright green is illegible. */
+/* The light heading sits on white, where the bright green is illegible. */
 .section-heading.light .section-kicker { color: var(--green-deep); }
-.eyebrow { color: var(--green-deep); }
 
 .popular-heading {
   margin: 0 0 16px;
