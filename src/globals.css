@@ -651,3 +651,5 @@ footer a {
   .meats-section { padding: 26px 20px 18px; }
   .meat-options { column-gap: 18px; margin-top: 20px; }
 }
+
+.visit-card .payment-notice { margin-top: 12px; font-weight: 700; }

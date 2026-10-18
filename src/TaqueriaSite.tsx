@@ -730,6 +730,7 @@ export function TaqueriaSite() {
             <div className="visit-card pickup-card">
               <h3>{text.pickup}</h3>
               <p>{text.pickupNote}</p>
+              <p className="payment-notice">{language === "en" ? "Now taking card payments with a 3.5% fee + tax." : "Ahora aceptamos pagos con tarjeta con un cargo del 3.5% + impuestos."}</p>
               <a href={phoneHref} onClick={() => trackConversion("call_click", { location: "visit" })}>{phoneDisplay}</a>
             </div>
           </div>
