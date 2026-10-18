@@ -12,7 +12,7 @@
   /* --green-bright is only legible on dark; use this for green text on light backgrounds. */
   --green-deep: #2a5714;
   --gold: #ffbf47;
-  --orange-deep: #a3460b;
+  --orange-deep: #c45100;
   --orange-soft: #f8e6d5;
   --muted: #626262;
   --radius-lg: 30px;
@@ -202,7 +202,7 @@ footer a {
   font-weight: 700;
 }
 
-.open-status { padding: 9px 13px; background: var(--orange-soft); color: var(--orange-deep); }
+.open-status { padding: 9px 13px; background: #75df4b; color: #173b0c; }
 .open-status.closed { background: #f3e3e3; color: #8b2227; }
 
 .hero-actions {
