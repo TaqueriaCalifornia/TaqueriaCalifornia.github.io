@@ -653,3 +653,12 @@ footer a {
 }
 
 .visit-card .payment-notice { margin-top: 12px; font-weight: 700; }
+
+/* Keep meat choices compact now that each option has one translated name. */
+.meat-options { margin-top: 16px; }
+.meat-options li { min-height: 56px; padding: 14px 0 14px 14px; }
+.meat-options li::before { top: 18px; }
+@media (max-width: 720px) {
+  .meats-section { padding: 22px 20px 12px; }
+  .meat-options { margin-top: 14px; }
+}

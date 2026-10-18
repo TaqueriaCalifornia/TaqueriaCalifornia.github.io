@@ -621,7 +621,6 @@ export function TaqueriaSite() {
             {meats.map((meat) => (
               <li key={meat.name.es}>
                 <strong>{language === "en" ? meat.name.en : meat.name.es === "Pastor" ? "Al Pastor" : meat.name.es}</strong>
-                <span>{meat.type[language]}</span>
               </li>
             ))}
           </ul>
