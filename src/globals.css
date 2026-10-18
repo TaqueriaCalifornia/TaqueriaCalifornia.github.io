@@ -202,7 +202,7 @@ footer a {
   font-weight: 700;
 }
 
-.open-status { padding: 9px 13px; background: #75df4b; color: #173b0c; }
+.open-status { padding: 9px 13px; background: #e7efdf; color: var(--green-deep); }
 .open-status.closed { background: #f3e3e3; color: #8b2227; }
 
 .hero-actions {
