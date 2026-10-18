@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 type Language = "en" | "es";
 type Translated = { en: string; es: string };
@@ -430,9 +430,20 @@ function ResponsiveImage({
 function MenuCard({ item, language }: { item: MenuItem; language: Language }) {
   const [expanded, setExpanded] = useState(false);
   const detailsId = `menu-item-${item.id}-details`;
+  const photoDialog = useRef<HTMLDialogElement>(null);
+  const [photoOpen, setPhotoOpen] = useState(false);
+
+  useEffect(() => {
+    if (!photoOpen) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = previous; };
+  }, [photoOpen]);
   return (
     <article className={`menu-card${expanded ? " is-open" : ""}`}>
-      <div className="menu-card-image-wrap">
+      <button type="button" className="menu-card-image-wrap photo-trigger"
+        aria-label={`${language === "en" ? "Enlarge photo:" : "Ampliar foto:"} ${item.name[language]}`}
+        onClick={() => { setPhotoOpen(true); photoDialog.current?.showModal(); }}>
         {item.id.startsWith("side") ? null : <span className="menu-number">#{item.id}</span>}
         <ResponsiveImage
           image={item.image}
@@ -440,7 +451,19 @@ function MenuCard({ item, language }: { item: MenuItem; language: Language }) {
           className="menu-card-image"
           sizes="(max-width: 720px) 96px, (max-width: 980px) 40vw, 320px"
         />
-      </div>
+      </button>
+      <dialog ref={photoDialog} className="photo-dialog" aria-label={item.name[language]}
+        onClose={() => setPhotoOpen(false)}
+        onClick={(event) => { if (event.target === event.currentTarget) photoDialog.current?.close(); }}>
+        {photoOpen && <div className="photo-preview">
+          <button type="button" className="photo-close" autoFocus
+            aria-label={language === "en" ? "Close photo" : "Cerrar foto"}
+            onClick={() => photoDialog.current?.close()}>×</button>
+          <ResponsiveImage image={item.image} alt={item.name[language]} className="photo-enlarged" sizes="(max-width: 720px) 92vw, 680px" priority />
+          <div className="photo-caption"><h2>{item.name[language]}</h2><strong>{item.price}</strong></div>
+          <p className="photo-description">{item.description[language]}</p>
+        </div>}
+      </dialog>
       <button
         className="menu-card-summary"
         type="button"
@@ -464,6 +487,36 @@ function MenuCard({ item, language }: { item: MenuItem; language: Language }) {
 
 export function TaqueriaSite() {
   const [language, setLanguage] = useState<Language>("en");
+  const [showLanguageHint, setShowLanguageHint] = useState(false);
+  const languageButton = useRef<HTMLButtonElement>(null);
+  const languageHint = useRef<HTMLElement>(null);
+  useEffect(() => {
+    if (!showLanguageHint) return;
+    const alignHint = () => {
+      const button = languageButton.current;
+      const hint = languageHint.current;
+      if (!button || !hint) return;
+      const buttonRect = button.getBoundingClientRect();
+      const hintRect = hint.getBoundingClientRect();
+      hint.style.setProperty("--hint-pointer", `${buttonRect.left + buttonRect.width / 2 - hintRect.left}px`);
+      hint.style.top = `${buttonRect.bottom + 18}px`;
+    };
+    alignHint();
+    window.addEventListener("resize", alignHint);
+    window.addEventListener("scroll", alignHint, { passive: true });
+    return () => {
+      window.removeEventListener("resize", alignHint);
+      window.removeEventListener("scroll", alignHint);
+    };
+  }, [showLanguageHint]);
+  useEffect(() => {
+    try { setShowLanguageHint(sessionStorage.getItem("translation-hint-dismissed") !== "true"); }
+    catch { setShowLanguageHint(true); }
+  }, []);
+  const dismissLanguageHint = () => {
+    setShowLanguageHint(false);
+    try { sessionStorage.setItem("translation-hint-dismissed", "true"); } catch { /* Storage is optional. */ }
+  };
   const [openCategories, setOpenCategories] = useState<Record<MenuCategory, boolean>>({
     single: true,
     combos: true,
@@ -556,14 +609,21 @@ export function TaqueriaSite() {
           <a href="#visit">{text.visit}</a>
         </div>
         <button
+          ref={languageButton}
           className="language-toggle"
           type="button"
           aria-label={text.languageLabel}
-          onClick={() => setLanguage((current) => (current === "en" ? "es" : "en"))}
+          onClick={() => { dismissLanguageHint(); setLanguage((current) => (current === "en" ? "es" : "en")); }}
         >
           {language === "en" ? "ES" : "EN"}
         </button>
       </nav>
+      {showLanguageHint && (
+        <aside ref={languageHint} className="translation-hint" aria-label="Language help">
+          <p>Tap <strong>ES</strong> above to view this site in Spanish.<span lang="es">Toca ES para ver el sitio en español.</span></p>
+          <button type="button" onClick={dismissLanguageHint} aria-label="Dismiss language tip">×</button>
+        </aside>
+      )}
 
       <main id="main-content">
         <section className="hero" aria-labelledby="hero-title">
@@ -589,6 +649,18 @@ export function TaqueriaSite() {
           <div className="hero-image-wrap">
             <ResponsiveImage image="truck" alt="Taqueria California food truck in Tulsa" className="hero-image" sizes="(max-width: 980px) 92vw, 540px" priority />
           </div>
+        </section>
+
+        <section className="dark-section meats-section" id="meats" aria-labelledby="meats-title">
+          <h2 id="meats-title">{language === "en" ? "Meats" : "Carnes"}</h2>
+          <ul className="meat-options">
+            {meats.map((meat) => (
+              <li key={meat.name.es}>
+                <strong>{meat.name.es === "Pollo" ? "Pollo" : meat.name.es === "Pastor" ? "Al Pastor" : meat.name.es}</strong>
+                <span>{meat.name.en}</span>
+              </li>
+            ))}
+          </ul>
         </section>
 
         <section className="dark-section menu-section" id="menu" aria-labelledby="menu-title">
@@ -664,24 +736,6 @@ export function TaqueriaSite() {
           </div>
         </section>
 
-        <section className="dark-section meats-section" id="meats" aria-labelledby="meats-title">
-          <div className="meats-heading">
-            <span>
-              <span className="section-kicker">{language === "en" ? "Your choice" : "Tu elección"}</span>
-              <strong id="meats-title">{text.meats}</strong>
-            </span>
-          </div>
-          <p className="meats-intro">{text.meatsIntro}</p>
-          <ol className="meats-list" id="meats-list">
-            {meats.map((meat, index) => (
-              <li key={meat.name.es}>
-                <span className="meat-index">{String(index + 1).padStart(2, "0")}</span>
-                <span className={`meat-type ${meat.tone}`}>{meat.type[language]}</span>
-                <strong>{meat.name[language]}</strong>
-              </li>
-            ))}
-          </ol>
-        </section>
 
         <section className="visit-section" id="visit" aria-labelledby="visit-title">
           <div className="visit-info">
