@@ -388,14 +388,12 @@ function ResponsiveImage({
   className,
   sizes,
   priority = false,
-  eager = false,
 }: {
   image: keyof typeof imageDimensions;
   alt: string;
   className: string;
   sizes: string;
   priority?: boolean;
-  eager?: boolean;
 }) {
   const dimensions = imageDimensions[image];
   return (
@@ -413,13 +411,15 @@ function ResponsiveImage({
         width={dimensions.width}
         height={dimensions.height}
         alt={alt}
-        loading={priority || eager ? "eager" : "lazy"}
+        loading={priority ? "eager" : "lazy"}
         fetchPriority={priority ? "high" : "auto"}
         decoding="async"
         onError={(event) => {
           const failedImage = event.currentTarget;
           failedImage.parentElement?.querySelector("source")?.remove();
           failedImage.srcset = "";
+          if (failedImage.dataset.fallback) return;
+          failedImage.dataset.fallback = "true";
           failedImage.src = `/media/${image}-640.jpg`;
         }}
       />
@@ -438,8 +438,7 @@ function MenuCard({ item, language }: { item: MenuItem; language: Language }) {
           image={item.image}
           alt={item.name[language]}
           className="menu-card-image"
-          sizes="(max-width: 720px) 88vw, (max-width: 1100px) 44vw, 30vw"
-          eager
+          sizes="(max-width: 720px) 96px, (max-width: 980px) 40vw, 320px"
         />
       </div>
       <button
@@ -466,9 +465,9 @@ function MenuCard({ item, language }: { item: MenuItem; language: Language }) {
 export function TaqueriaSite() {
   const [language, setLanguage] = useState<Language>("en");
   const [openCategories, setOpenCategories] = useState<Record<MenuCategory, boolean>>({
-    single: false,
-    combos: false,
-    sides: false,
+    single: true,
+    combos: true,
+    sides: true,
   });
   const [openStatus, setOpenStatus] = useState(getOpenStatus);
   const popularItems = useMemo(
@@ -497,7 +496,7 @@ export function TaqueriaSite() {
       directions: "Get Directions",
       viewMenu: "View Menu",
       popular: "Popular Picks",
-      menuIntro: "Start with customer favorites or open a category to see the complete menu.",
+      menuIntro: "Browse the menu below. Tap a dish for details. Call ahead for pickup.",
       seeMore: "See more",
       showLess: "Show less",
       meatsIntro: "Choose your favorite protein for tacos, burritos, tortas, quesadillas, plates, and more.",
@@ -525,7 +524,7 @@ export function TaqueriaSite() {
       directions: "Cómo Llegar",
       viewMenu: "Ver Menú",
       popular: "Los Favoritos",
-      menuIntro: "Empieza con los favoritos o abre una categoría para ver el menú completo.",
+      menuIntro: "Explora el menú. Toca un platillo para ver los detalles. Llama para recoger tu pedido.",
       seeMore: "Ver más",
       showLess: "Ver menos",
       meatsIntro: "Elige tu carne favorita para tacos, burritos, tortas, quesadillas, platos y más.",
@@ -546,7 +545,7 @@ export function TaqueriaSite() {
 
   return (
     <div id="top" className="site-shell">
-      <a className="skip-link" href="#main-content">Skip to content</a>
+      <a className="skip-link" href="#main-content">{language === "en" ? "Skip to content" : "Saltar al contenido"}</a>
       <nav className="top-nav" aria-label={language === "en" ? "Primary navigation" : "Navegación principal"}>
         <a className="brand-link" href="#top" aria-label="Taqueria California home">
           <img src="/media/logo-header-256.png" width="40" height="40" alt="" />
@@ -588,7 +587,7 @@ export function TaqueriaSite() {
             </div>
           </div>
           <div className="hero-image-wrap">
-            <ResponsiveImage image="truck" alt="Taqueria California food truck in Tulsa" className="hero-image" sizes="(max-width: 800px) 92vw, 48vw" priority />
+            <ResponsiveImage image="truck" alt="Taqueria California food truck in Tulsa" className="hero-image" sizes="(max-width: 980px) 92vw, 540px" priority />
           </div>
         </section>
 
@@ -599,13 +598,21 @@ export function TaqueriaSite() {
             <p>{text.menuIntro}</p>
           </div>
 
+          <nav className="menu-shortcuts" aria-label={language === "en" ? "Menu categories" : "Categorías del menú"}>
+            {(Object.keys(categoryLabels) as MenuCategory[]).map((category) => (
+              <a key={category} href={`#category-${category}`} onClick={() => setOpenCategories((current) => ({ ...current, [category]: true }))}>
+                {categoryLabels[category][language]}
+              </a>
+            ))}
+          </nav>
+
           <h3 className="popular-heading">{text.popular}</h3>
           <div className="popular-grid">
             {popularItems.map((item) => (
               <article className="popular-card" key={item.id}>
                 <div className="popular-image-wrap">
                   <span className="popular-badge">#{item.id} {language === "en" ? "Popular" : "Favorito"}</span>
-                  <ResponsiveImage image={item.image} alt={item.name[language]} className="popular-image" sizes="(max-width: 800px) 88vw, 30vw" eager />
+                  <ResponsiveImage image={item.image} alt={item.name[language]} className="popular-image" sizes="(max-width: 800px) 88vw, 30vw" />
                 </div>
                 <div className="popular-body">
                   <div className="popular-title-row">
@@ -626,7 +633,7 @@ export function TaqueriaSite() {
               const categoryItems = menuItems.filter((item) => item.category === category);
               const visibleItems = expanded ? categoryItems : categoryItems.slice(0, 1);
               return (
-                <div className="menu-category" key={category} aria-labelledby={headingId}>
+                <div className="menu-category" id={`category-${category}`} key={category} aria-labelledby={headingId}>
                   <h3 className="category-heading" id={headingId}>
                     {categoryLabels[category][language]}
                   </h3>
