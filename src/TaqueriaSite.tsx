@@ -487,36 +487,6 @@ function MenuCard({ item, language }: { item: MenuItem; language: Language }) {
 
 export function TaqueriaSite() {
   const [language, setLanguage] = useState<Language>("en");
-  const [showLanguageHint, setShowLanguageHint] = useState(false);
-  const languageButton = useRef<HTMLButtonElement>(null);
-  const languageHint = useRef<HTMLElement>(null);
-  useEffect(() => {
-    if (!showLanguageHint) return;
-    const alignHint = () => {
-      const button = languageButton.current;
-      const hint = languageHint.current;
-      if (!button || !hint) return;
-      const buttonRect = button.getBoundingClientRect();
-      const hintRect = hint.getBoundingClientRect();
-      hint.style.setProperty("--hint-pointer", `${buttonRect.left + buttonRect.width / 2 - hintRect.left}px`);
-      hint.style.top = `${buttonRect.bottom + 18}px`;
-    };
-    alignHint();
-    window.addEventListener("resize", alignHint);
-    window.addEventListener("scroll", alignHint, { passive: true });
-    return () => {
-      window.removeEventListener("resize", alignHint);
-      window.removeEventListener("scroll", alignHint);
-    };
-  }, [showLanguageHint]);
-  useEffect(() => {
-    try { setShowLanguageHint(sessionStorage.getItem("translation-hint-dismissed") !== "true"); }
-    catch { setShowLanguageHint(true); }
-  }, []);
-  const dismissLanguageHint = () => {
-    setShowLanguageHint(false);
-    try { sessionStorage.setItem("translation-hint-dismissed", "true"); } catch { /* Storage is optional. */ }
-  };
   const [openCategories, setOpenCategories] = useState<Record<MenuCategory, boolean>>({
     single: true,
     combos: true,
@@ -609,21 +579,15 @@ export function TaqueriaSite() {
           <a href="#visit">{text.visit}</a>
         </div>
         <button
-          ref={languageButton}
           className="language-toggle"
           type="button"
           aria-label={text.languageLabel}
-          onClick={() => { dismissLanguageHint(); setLanguage((current) => (current === "en" ? "es" : "en")); }}
+          onClick={() => setLanguage((current) => (current === "en" ? "es" : "en"))}
         >
           {language === "en" ? "ES" : "EN"}
         </button>
       </nav>
-      {showLanguageHint && (
-        <aside ref={languageHint} className="translation-hint" aria-label="Language help">
-          <p>Tap <strong>ES</strong> above to view this site in Spanish.<span lang="es">Toca ES para ver el sitio en español.</span></p>
-          <button type="button" onClick={dismissLanguageHint} aria-label="Dismiss language tip">×</button>
-        </aside>
-      )}
+
 
       <main id="main-content">
         <section className="hero" aria-labelledby="hero-title">

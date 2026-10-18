@@ -651,13 +651,3 @@ footer a {
   .meats-section { padding: 26px 20px 18px; }
   .meat-options { column-gap: 18px; margin-top: 20px; }
 }
-
-/* A dismissible introduction to the existing language switch. */
-.translation-hint { position: fixed; top: 82px; left: 50%; transform: translateX(-50%); z-index: 1300; width: min(320px, calc(100vw - 32px)); display: flex; align-items: start; gap: 8px; padding: 14px 10px 14px 16px; border: 1px solid #ddd7cc; border-radius: 16px; background: #fffdf8; color: #252525; box-shadow: 0 12px 32px #0003; }
-.translation-hint::before { content: ""; position: absolute; top: -7px; left: calc(var(--hint-pointer, 50%) - 6px); width: 12px; height: 12px; background: #fffdf8; border-top: 1px solid #ddd7cc; border-left: 1px solid #ddd7cc; transform: rotate(45deg); }
-.translation-hint p { margin: 0; font-size: .88rem; line-height: 1.5; }
-.translation-hint p span { display: block; margin-top: 5px; color: #626262; font-size: .8rem; }
-.translation-hint strong { color: #b44b00; }
-.translation-hint button { flex-shrink: 0; display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%; background: transparent; color: #555; font-size: 1.5rem; cursor: pointer; }
-.translation-hint button:hover { background: #eee9df; }
-@media (max-width: 720px) { .translation-hint { top: 76px; } }
