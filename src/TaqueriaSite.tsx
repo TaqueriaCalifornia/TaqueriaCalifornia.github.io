@@ -620,8 +620,8 @@ export function TaqueriaSite() {
           <ul className="meat-options">
             {meats.map((meat) => (
               <li key={meat.name.es}>
-                <strong>{meat.name.es === "Pollo" ? "Pollo" : meat.name.es === "Pastor" ? "Al Pastor" : meat.name.es}</strong>
-                <span>{meat.name.en}</span>
+                <strong>{language === "en" ? meat.name.en : meat.name.es === "Pastor" ? "Al Pastor" : meat.name.es}</strong>
+                <span>{meat.type[language]}</span>
               </li>
             ))}
           </ul>
