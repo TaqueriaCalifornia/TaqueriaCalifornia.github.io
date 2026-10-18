@@ -662,3 +662,8 @@ footer a {
   .meats-section { padding: 22px 20px 12px; }
   .meat-options { margin-top: 14px; }
 }
+
+/* Keep paired meat names aligned when a translation wraps. */
+.meat-options li { justify-content: flex-start; }
+.meat-options strong { line-height: 1.35; }
+.meat-options li::before { top: 17px; }
