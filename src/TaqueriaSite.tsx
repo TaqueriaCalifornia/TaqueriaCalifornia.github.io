@@ -337,6 +337,9 @@ function getOpenStatus() {
   const parts = new Intl.DateTimeFormat("en-US", {
     timeZone: "America/Chicago",
     weekday: "short",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
     hour: "2-digit",
     minute: "2-digit",
     hour12: false,
@@ -344,13 +347,14 @@ function getOpenStatus() {
   const value = (type: Intl.DateTimeFormatPartTypes) =>
     parts.find((part) => part.type === type)?.value ?? "0";
   const weekday = value("weekday");
+  const todayOverride = value("year") === "2026" && value("month") === "10" && value("day") === "20";
   const minutes = (Number(value("hour")) % 24) * 60 + Number(value("minute"));
   const closeMinutes = weekday === "Fri" || weekday === "Sat" ? 23 * 60 : 22 * 60;
   const openingMinutes = 10 * 60 + 30;
   const closeLabel = closeMinutes === 23 * 60 ? "11:00 PM" : "10:00 PM";
 
   // Closed all day Tuesday, so Monday night points at Wednesday rather than "tomorrow".
-  if (weekday === "Tue") {
+  if (weekday === "Tue" && !todayOverride) {
     return {
       isOpen: false,
       en: "Closed today · opens Wednesday at 10:30 AM",
@@ -719,7 +723,7 @@ export function TaqueriaSite() {
               <table>
                 <tbody>
                   <tr><th scope="row">{text.monday}</th><td>10:30 AM – 10:00 PM</td></tr>
-                  <tr><th scope="row">{text.tuesday}</th><td>{text.closedLabel}</td></tr>
+                  <tr><th scope="row">{text.tuesday}</th><td>{new Intl.DateTimeFormat("en-US", { timeZone: "America/Chicago", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date()) === "10/20/2026" ? "10:30 AM – 10:00 PM" : text.closedLabel}</td></tr>
                   <tr><th scope="row">{text.wednesdayThursday}</th><td>10:30 AM – 10:00 PM</td></tr>
                   <tr><th scope="row">{text.fridaySaturday}</th><td>10:30 AM – 11:00 PM</td></tr>
                   <tr><th scope="row">{text.sunday}</th><td>10:30 AM – 10:00 PM</td></tr>
