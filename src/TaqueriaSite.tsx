@@ -364,8 +364,8 @@ function getOpenStatus() {
   if (minutes >= openingMinutes && minutes < closeMinutes) {
     return {
       isOpen: true,
-      en: `Open now · until ${closeLabel}`,
-      es: `Abierto ahora · hasta las ${closeLabel}`,
+      en: `Open now · Today: 10:30 AM – ${closeLabel}`,
+      es: `Abierto ahora · Hoy: 10:30 AM – ${closeLabel}`,
     };
   }
   if (minutes < openingMinutes) {
