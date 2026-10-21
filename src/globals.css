@@ -667,3 +667,22 @@ footer a {
 .meat-options li { justify-content: flex-start; }
 .meat-options strong { line-height: 1.35; }
 .meat-options li::before { top: 17px; }
+
+/* Drinks stay visible beneath the food menu in either language. */
+.drinks-block { margin-top: 36px; padding-top: 28px; border-top: 1px solid #414141; scroll-margin-top: 100px; }
+.drinks-block .section-heading { margin-bottom: 20px; }
+.drinks-block h3 { margin: 0; font-family: "Anton", sans-serif; font-weight: 400; font-size: clamp(1.6rem, 4vw, 2.2rem); text-transform: uppercase; }
+.drinks-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.drink-card { padding: 22px; border: 1px solid #414141; border-radius: 16px; background: #191919; }
+.drink-card h4 { margin: 0 0 10px; color: var(--green-bright); font-family: "Oswald", sans-serif; font-size: 1.3rem; }
+.drink-card p { margin: 0; color: #d0d0d0; line-height: 1.6; }
+@media (max-width: 720px) {
+  .drinks-grid { grid-template-columns: 1fr; gap: 10px; }
+  .drink-card { padding: 18px; }
+}
+
+.drink-prices { margin: 0; }
+.drink-prices > div { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; gap: 16px; padding: 12px 0; border-top: 1px solid #373737; }
+.drink-prices dt { color: #fff; line-height: 1.5; }
+.drink-prices dd { margin: 0; color: var(--green-bright); font-family: "Oswald", sans-serif; white-space: nowrap; }
+.drink-card .drink-flavors { margin-top: 12px; font-size: .9rem; }

@@ -643,6 +643,7 @@ export function TaqueriaSite() {
                 {categoryLabels[category][language]}
               </a>
             ))}
+            <a href="#drinks">{language === "en" ? "Drinks & Aguas Frescas" : "Bebidas y Aguas Frescas"}</a>
           </nav>
 
           <h3 className="popular-heading">{text.popular}</h3>
@@ -701,6 +702,31 @@ export function TaqueriaSite() {
               );
             })}
           </div>
+
+          <section className="drinks-block" id="drinks" aria-labelledby="drinks-title">
+            <div className="section-heading">
+              <p className="section-kicker">{language === "en" ? "Pair it with your meal" : "Acompaña tu comida"}</p>
+              <h3 id="drinks-title">{language === "en" ? "Drinks & Aguas Frescas" : "Bebidas y Aguas Frescas"}</h3>
+            </div>
+            <div className="drinks-grid">
+              <article className="drink-card">
+                <h4>{language === "en" ? "Drinks" : "Bebidas"}</h4>
+                <dl className="drink-prices">
+                  <div><dt>{language === "en" ? "Glass bottle Coke & Fanta" : "Coca-Cola y Fanta en botella de vidrio"}</dt><dd>$3.99</dd></div>
+                  <div><dt>{language === "en" ? "Canned Coke & Sprite" : "Coca-Cola y Sprite en lata"}</dt><dd>$1.50</dd></div>
+                  <div><dt>Jarritos</dt><dd>$2.50</dd></div>
+                </dl>
+                <p className="drink-flavors">{language === "en" ? "Jarritos flavors: Pineapple, Mandarin, Tamarind, Lime, Strawberry." : "Sabores de Jarritos: Piña, Mandarina, Tamarindo, Lima, Fresa."}</p>
+              </article>
+              <article className="drink-card">
+                <h4>Aguas Frescas</h4>
+                <dl className="drink-prices">
+                  <div><dt>Horchata</dt><dd>$3.99</dd></div>
+                  <div><dt>Jamaica</dt><dd>$3.99</dd></div>
+                </dl>
+              </article>
+            </div>
+          </section>
         </section>
 
 
