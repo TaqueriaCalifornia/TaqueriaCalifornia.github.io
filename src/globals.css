@@ -726,3 +726,10 @@ footer a {
 .harvest .visit-section {background:#fff8e9;border:1px solid #cca06f}
 .harvest .visit-section .section-kicker {color:#853b20}
 .harvest .thanksgiving-banner {background:#f5d29d;border-block:1px solid #b67b43}
+
+.taco-shower { position:fixed; inset:0; z-index:1500; pointer-events:none; overflow:hidden; }
+.taco-shower > span { position:absolute; top:-48px; animation:taco-descent 4s linear both; }
+.taco-shower i { display:block; font-style:normal; animation:taco-sway 1.9s ease-in-out infinite alternate; }
+@keyframes taco-descent { to { transform:translateY(calc(100vh + 96px)); } }
+@keyframes taco-sway { from { transform:translateX(-19px) rotate(-32deg); } to { transform:translateX(19px) rotate(36deg); } }
+@media (prefers-reduced-motion:reduce) { .taco-shower { display:none; } }

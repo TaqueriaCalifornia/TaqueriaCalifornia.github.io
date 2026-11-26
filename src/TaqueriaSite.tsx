@@ -512,11 +512,27 @@ function ThanksgivingPopup({ language, active }: { language: Language; active: b
     document.body.style.overflow = "hidden";
     return () => { popup?.close(); document.body.style.overflow = previous; };
   }, [active, dismissed]);
-  if (!active || dismissed) return null;
+  const [falling, setFalling] = useState(false);
+  useEffect(() => {
+    if (!falling) return;
+    const timer = window.setTimeout(() => setFalling(false), 5200);
+    return () => window.clearTimeout(timer);
+  }, [falling]);
+  if (!active) return null;
+  if (dismissed) return falling ? (
+    <div className="taco-shower" aria-hidden="true">
+      {Array.from({ length: 16 }, (_, i) => (
+        <span key={i} style={{ left: (2 + (i * 37) % 94) + "%", fontSize: (20 + i % 4 * 3) + "px",
+          animationDelay: ((i * 7) % 13) * 65 + "ms", animationDuration: (3300 + i % 4 * 285) + "ms" }}>
+          <i style={{ animationDelay: (-i * 310) + "ms" }}>🌮</i>
+        </span>
+      ))}
+    </div>
+  ) : null;
   const spanish = language === "es";
   return (
     <dialog ref={dialog} className="thanksgiving-popup" aria-labelledby="thanksgiving-title"
-      aria-describedby="thanksgiving-message" onClose={() => setDismissed(true)}
+      aria-describedby="thanksgiving-message" onClose={() => { if (!dialog.current || dialog.current.open) return; setDismissed(true); setFalling(!window.matchMedia("(prefers-reduced-motion: reduce)").matches); }}
       onClick={(event) => { if (event.target === event.currentTarget) dialog.current?.close(); }}>
       <div className="thanksgiving-card">
         <button className="thanksgiving-close" type="button" autoFocus
@@ -531,7 +547,7 @@ function ThanksgivingPopup({ language, active }: { language: Language; active: b
         </div>
         <p className="thanksgiving-note">{spanish ? "Hoy cerramos a las 5 p.m." : "We're closing at 5 p.m. today."}</p>
         <button className="thanksgiving-menu" type="button" onClick={() => dialog.current?.close()}>
-          {spanish ? "Explorar el menú" : "Explore the menu"} <span aria-hidden="true">→</span>
+          OK
         </button>
       </div>
     </dialog>
