@@ -622,7 +622,7 @@ export function TaqueriaSite() {
   }[language];
 
   return (
-    <div id="top" className="site-shell">
+    <div id="top" className={thanksgivingToday ? "site-shell harvest" : "site-shell"}>
       <a className="skip-link" href="#main-content">{language === "en" ? "Skip to content" : "Saltar al contenido"}</a>
       <nav className="top-nav" aria-label={language === "en" ? "Primary navigation" : "Navegación principal"}>
         <a className="brand-link" href="#top" aria-label="Taqueria California home">

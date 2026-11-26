@@ -706,3 +706,23 @@ footer a {
 .thanksgiving-banner strong { margin-right: 6px; }
 .thanksgiving-hours-row { color: #8b3e20; font-weight: 900; }
 @media (max-width: 480px) { .thanksgiving-card { padding: 34px 22px 24px; } .thanksgiving-banner { font-size: 13px; } }
+
+/* The Tulsa date check on the site shell limits these colors to Thanksgiving. */
+.harvest {
+  display: flow-root;
+  --red: #973e23;
+  --gold: #ffca77;
+  background-color: #fff4dd;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='170' height='142' viewBox='0 0 170 142'%3E%3Cg fill='none' stroke='%23b87338' stroke-opacity='.19' stroke-width='1.4' transform='translate(20 22) rotate(18 18 15)'%3E%3Cpath d='M2 30Q1 5 37 2Q36 27 2 30ZM0 33L32 6M12 22L11 13M20 16L28 16'/%3E%3C/g%3E%3C/svg%3E"),linear-gradient(145deg,#fff4dd,#f5d4a3 58%,#fff1d8);
+}
+.harvest .top-nav,.harvest .mobile-actions,.harvest footer {background-color:#472419;color:#fff5dd}
+.harvest .hero h1 {color:#542819}
+.harvest .hero .eyebrow {color:#843919}
+.harvest .hero-image-wrap {outline:3px solid #f9d292;box-shadow:0 14px 35px #69361835}
+.harvest .dark-section {background:linear-gradient(140deg,#49291f,#2d1a15 70%);border-color:#ad7045}
+.harvest .menu-card,.harvest .popular-card,.harvest .drink-card {background:#41271e;border-color:#80563b}
+.harvest .menu-card-price,.harvest .popular-body strong,.harvest .section-kicker {color:#ffd08a}
+.harvest .meat-options li::before {background:#ffba65}
+.harvest .visit-section {background:#fff8e9;border:1px solid #cca06f}
+.harvest .visit-section .section-kicker {color:#853b20}
+.harvest .thanksgiving-banner {background:#f5d29d;border-block:1px solid #b67b43}
