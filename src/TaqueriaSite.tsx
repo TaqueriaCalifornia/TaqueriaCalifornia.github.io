@@ -524,7 +524,7 @@ function ThanksgivingPopup({ language, active }: { language: Language; active: b
       {Array.from({ length: 16 }, (_, i) => (
         <span key={i} style={{ left: (2 + (i * 37) % 94) + "%", fontSize: (20 + i % 4 * 3) + "px",
           animationDelay: ((i * 7) % 13) * 65 + "ms", animationDuration: (3300 + i % 4 * 285) + "ms" }}>
-          <i style={{ animationDelay: (-i * 310) + "ms" }}>🌮</i>
+          <i style={{ animationDelay: (-i * 310) + "ms" }}>{i % 2 === 0 ? "🌮" : "🍗"}</i>
         </span>
       ))}
     </div>
