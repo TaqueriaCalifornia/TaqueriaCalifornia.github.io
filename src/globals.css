@@ -686,3 +686,23 @@ footer a {
 .drink-prices dt { color: #fff; line-height: 1.5; }
 .drink-prices dd { margin: 0; color: var(--green-bright); font-family: "Oswald", sans-serif; white-space: nowrap; }
 .drink-card .drink-flavors { margin-top: 12px; font-size: .9rem; }
+
+/* Thanksgiving announcement, shown only November 26 in Tulsa. */
+.thanksgiving-popup { border: 0; padding: 0; width: min(500px, calc(100% - 32px)); max-height: calc(100dvh - 32px); border-radius: 26px; background: #fff7e8; color: #482b1c; box-shadow: 0 24px 100px #0006; }
+.thanksgiving-popup::backdrop { background: #1e160fd1; backdrop-filter: blur(6px); }
+.thanksgiving-card { position: relative; padding: 38px 32px 32px; text-align: center; overflow: hidden; background: radial-gradient(ellipse at top, #ffd99b88, transparent 65%); }
+.thanksgiving-close { position: absolute; right: 12px; top: 10px; width: 38px; height: 38px; border: 0; border-radius: 50%; background: #482b1c0c; color: #482b1c; font-size: 27px; cursor: pointer; }
+.thanksgiving-leaves { font-size: 38px; letter-spacing: 8px; margin: 2px 0 18px; }
+.thanksgiving-kicker { text-transform: uppercase; letter-spacing: .16em; font-size: 11px; font-weight: 900; color: #8b451e; }
+.thanksgiving-card h2 { font-family: "Oswald", sans-serif; font-size: clamp(32px, 7vw, 44px); line-height: 1.15; margin: 16px 0; text-transform: uppercase; }
+.thanksgiving-card > p:not(.thanksgiving-kicker) { font-size: 15px; line-height: 1.6; }
+.thanksgiving-hours { margin: 24px 0 12px; padding: 20px 10px; border-block: 1px solid #b475343b; }
+.thanksgiving-hours span { display: block; font-size: 12px; text-transform: uppercase; letter-spacing: .1em; font-weight: 900; }
+.thanksgiving-hours strong { display: block; margin-top: 6px; font-size: clamp(22px, 5.8vw, 30px); }
+.thanksgiving-note { color: #805538; }
+.thanksgiving-menu { display: flex; align-items: center; justify-content: center; gap: 20px; width: 100%; padding: 16px; margin-top: 22px; border: 0; border-radius: 12px; background: #8b3e20; color: #fff8e9; font-weight: 900; cursor: pointer; }
+.thanksgiving-menu:hover { background: #6e2f17; }
+.thanksgiving-banner { display: flex; align-items: center; justify-content: center; gap: 12px; padding: 14px 20px; background: #f6dfb5; color: #603417; font-size: 14px; text-align: center; line-height: 1.5; }
+.thanksgiving-banner strong { margin-right: 6px; }
+.thanksgiving-hours-row { color: #8b3e20; font-weight: 900; }
+@media (max-width: 480px) { .thanksgiving-card { padding: 34px 22px 24px; } .thanksgiving-banner { font-size: 13px; } }

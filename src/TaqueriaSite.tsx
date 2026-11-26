@@ -333,6 +333,16 @@ function trackConversion(eventName: string, details: Record<string, string> = {}
   analyticsWindow.gtag?.("event", eventName, details);
 }
 
+const thanksgivingDate = "2026-11-26";
+
+function isThanksgivingToday() {
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone: "America/Chicago", year: "numeric", month: "2-digit", day: "2-digit",
+  }).formatToParts(new Date());
+  const part = (type: Intl.DateTimeFormatPartTypes) => parts.find((item) => item.type === type)?.value;
+  return `${part("year")}-${part("month")}-${part("day")}` === thanksgivingDate;
+}
+
 function getOpenStatus() {
   const parts = new Intl.DateTimeFormat("en-US", {
     timeZone: "America/Chicago",
@@ -349,9 +359,9 @@ function getOpenStatus() {
   const weekday = value("weekday");
   const todayOverride = value("year") === "2026" && value("month") === "10" && value("day") === "20";
   const minutes = (Number(value("hour")) % 24) * 60 + Number(value("minute"));
-  const closeMinutes = weekday === "Fri" || weekday === "Sat" ? 23 * 60 : 22 * 60;
+  const closeMinutes = isThanksgivingToday() ? 17 * 60 : weekday === "Fri" || weekday === "Sat" ? 23 * 60 : 22 * 60;
   const openingMinutes = 10 * 60 + 30;
-  const closeLabel = closeMinutes === 23 * 60 ? "11:00 PM" : "10:00 PM";
+  const closeLabel = closeMinutes === 17 * 60 ? "5:00 PM" : closeMinutes === 23 * 60 ? "11:00 PM" : "10:00 PM";
 
   // Closed all day Tuesday, so Monday night points at Wednesday rather than "tomorrow".
   if (weekday === "Tue" && !todayOverride) {
@@ -489,6 +499,43 @@ function MenuCard({ item, language }: { item: MenuItem; language: Language }) {
   );
 }
 
+function ThanksgivingPopup({ language, active }: { language: Language; active: boolean }) {
+  const dialog = useRef<HTMLDialogElement>(null);
+  const [dismissed, setDismissed] = useState(false);
+  useEffect(() => {
+    if (!active || dismissed) return;
+    const popup = dialog.current;
+    popup?.showModal();
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => { popup?.close(); document.body.style.overflow = previous; };
+  }, [active, dismissed]);
+  if (!active || dismissed) return null;
+  const spanish = language === "es";
+  return (
+    <dialog ref={dialog} className="thanksgiving-popup" aria-labelledby="thanksgiving-title"
+      aria-describedby="thanksgiving-message" onClose={() => setDismissed(true)}
+      onClick={(event) => { if (event.target === event.currentTarget) dialog.current?.close(); }}>
+      <div className="thanksgiving-card">
+        <button className="thanksgiving-close" type="button" autoFocus
+          aria-label={spanish ? "Cerrar aviso" : "Close announcement"} onClick={() => dialog.current?.close()}>×</button>
+        <div className="thanksgiving-leaves" aria-hidden="true">🍂 🍁 🍂</div>
+        <p className="thanksgiving-kicker">{spanish ? "Jueves · 26 de noviembre" : "Thursday · November 26"}</p>
+        <h2 id="thanksgiving-title">{spanish ? "¡Feliz Día de Acción de Gracias!" : "Happy Thanksgiving!"}</h2>
+        <p id="thanksgiving-message">{spanish ? "Gracias por ser parte de nuestra familia." : "Thankful for you, today and every day."}</p>
+        <div className="thanksgiving-hours">
+          <span>{spanish ? "Horario especial de hoy" : "Today's holiday hours"}</span>
+          <strong>10:30 AM – 5:00 PM</strong>
+        </div>
+        <p className="thanksgiving-note">{spanish ? "Hoy cerramos a las 5 p.m." : "We're closing at 5 p.m. today."}</p>
+        <button className="thanksgiving-menu" type="button" onClick={() => dialog.current?.close()}>
+          {spanish ? "Explorar el menú" : "Explore the menu"} <span aria-hidden="true">→</span>
+        </button>
+      </div>
+    </dialog>
+  );
+}
+
 export function TaqueriaSite() {
   const [language, setLanguage] = useState<Language>("en");
   const [openCategories, setOpenCategories] = useState<Record<MenuCategory, boolean>>({
@@ -497,6 +544,7 @@ export function TaqueriaSite() {
     sides: true,
   });
   const [openStatus, setOpenStatus] = useState(getOpenStatus);
+  const thanksgivingToday = isThanksgivingToday();
   const popularItems = useMemo(
     () => ["11", "13", "16"].map((id) => menuItems.find((item) => item.id === id)!),
     [],
@@ -593,6 +641,11 @@ export function TaqueriaSite() {
       </nav>
 
 
+      <ThanksgivingPopup language={language} active={thanksgivingToday} />
+      {thanksgivingToday && <aside className="thanksgiving-banner" aria-label={language === "en" ? "Thanksgiving hours" : "Horario de Acción de Gracias"}>
+        <span aria-hidden="true">🍁</span>
+        <span><strong>{language === "en" ? "Happy Thanksgiving!" : "¡Feliz Día de Acción de Gracias!"}</strong> {language === "en" ? "Today's hours" : "Horario de hoy"}: 10:30 AM – 5:00 PM</span>
+      </aside>}
       <main id="main-content">
         <section className="hero" aria-labelledby="hero-title">
           <div className="hero-copy">
@@ -750,7 +803,10 @@ export function TaqueriaSite() {
                 <tbody>
                   <tr><th scope="row">{text.monday}</th><td>10:30 AM – 10:00 PM</td></tr>
                   <tr><th scope="row">{text.tuesday}</th><td>{new Intl.DateTimeFormat("en-US", { timeZone: "America/Chicago", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date()) === "10/20/2026" ? "10:30 AM – 10:00 PM" : text.closedLabel}</td></tr>
-                  <tr><th scope="row">{text.wednesdayThursday}</th><td>10:30 AM – 10:00 PM</td></tr>
+                  {thanksgivingToday ? <>
+                    <tr><th scope="row">{language === "en" ? "Wednesday" : "Miércoles"}</th><td>10:30 AM – 10:00 PM</td></tr>
+                    <tr className="thanksgiving-hours-row"><th scope="row">{language === "en" ? "Thanksgiving (today)" : "Acción de Gracias (hoy)"}</th><td>10:30 AM – 5:00 PM</td></tr>
+                  </> : <tr><th scope="row">{text.wednesdayThursday}</th><td>10:30 AM – 10:00 PM</td></tr>}
                   <tr><th scope="row">{text.fridaySaturday}</th><td>10:30 AM – 11:00 PM</td></tr>
                   <tr><th scope="row">{text.sunday}</th><td>10:30 AM – 10:00 PM</td></tr>
                 </tbody>
