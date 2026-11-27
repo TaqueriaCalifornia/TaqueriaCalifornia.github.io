@@ -361,8 +361,8 @@ function getOpenStatus() {
   const minutes = (Number(value("hour")) % 24) * 60 + Number(value("minute"));
   const closeMinutes = isLocalDate(thanksgivingDate) ? 17 * 60 : weekday === "Fri" || weekday === "Sat" ? 23 * 60 : 22 * 60;
   const lateFriday = isLocalDate("2026-11-27");
-  const openingMinutes = lateFriday ? 14 * 60 : 10 * 60 + 30;
-  const openingLabel = lateFriday ? "2:00 PM" : "10:30 AM";
+  const openingMinutes = lateFriday ? 15 * 60 : 10 * 60 + 30;
+  const openingLabel = lateFriday ? "3:00 PM" : "10:30 AM";
   const closeLabel = closeMinutes === 17 * 60 ? "5:00 PM" : closeMinutes === 23 * 60 ? "11:00 PM" : "10:00 PM";
 
   // Closed all day Tuesday, so Monday night points at Wednesday rather than "tomorrow".
@@ -393,8 +393,8 @@ function getOpenStatus() {
       : { en: "tomorrow", es: "mañana" };
   return {
     isOpen: false,
-    en: `Closed · opens ${nextOpen.en} at ${isLocalDate(thanksgivingDate) ? "2:00 PM" : "10:30 AM"}`,
-    es: `Cerrado · abre ${nextOpen.es} a las ${isLocalDate(thanksgivingDate) ? "2:00 PM" : "10:30 AM"}`,
+    en: `Closed · opens ${nextOpen.en} at ${isLocalDate(thanksgivingDate) ? "3:00 PM" : "10:30 AM"}`,
+    es: `Cerrado · abre ${nextOpen.es} a las ${isLocalDate(thanksgivingDate) ? "3:00 PM" : "10:30 AM"}`,
   };
 }
 
@@ -827,7 +827,7 @@ export function TaqueriaSite() {
                     <tr className="thanksgiving-hours-row"><th scope="row">{language === "en" ? "Thanksgiving (today)" : "Acción de Gracias (hoy)"}</th><td>10:30 AM – 5:00 PM</td></tr>
                   </> : <tr><th scope="row">{text.wednesdayThursday}</th><td>10:30 AM – 10:00 PM</td></tr>}
                   {thanksgivingToday || lateFriday ? <>
-                    <tr><th scope="row">{language === "en" ? (lateFriday ? "Friday (today)" : "Friday (tomorrow)") : (lateFriday ? "Viernes (hoy)" : "Viernes (mañana)")}</th><td>2:00 PM – 11:00 PM</td></tr>
+                    <tr><th scope="row">{language === "en" ? (lateFriday ? "Friday (today)" : "Friday (tomorrow)") : (lateFriday ? "Viernes (hoy)" : "Viernes (mañana)")}</th><td>3:00 PM – 11:00 PM</td></tr>
                     <tr><th scope="row">{language === "en" ? "Saturday" : "Sábado"}</th><td>10:30 AM – 11:00 PM</td></tr>
                   </> : <tr><th scope="row">{text.fridaySaturday}</th><td>10:30 AM – 11:00 PM</td></tr>}
                   <tr><th scope="row">{text.sunday}</th><td>10:30 AM – 10:00 PM</td></tr>
